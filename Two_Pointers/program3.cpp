@@ -9,23 +9,32 @@ string findLongestSubstring(string &s){
 
     vector<int> checking(26,0);
 
-    for(int i=0;i<s.length();++i){
+    int left=0,right=0;
+    int maxLength=INT_MIN;
 
-        string currentWord="";
+    int leftIndex=-1,rightIndex=-1;
 
-        for(int j=i;j<s.length();++j){
-            if(checking[s[j]-'a' ]){
-                break;
-            }
-            else{
-                currentWord+=s[j];
-                checking[s[j]-'a']=1;
-            }
+    while(right<s.length()){
+
+        checking[s[right]-'a']++;
+
+        while(checking[s[right]-'a']==2){
+            checking[s[left]-'a']--;
+            left++;
         }
 
-        if(currentWord.length()>answer.length()){
-            answer=currentWord;
+        if(right-left>maxLength){
+            maxLength=right-left;
+            leftIndex=left;
+            rightIndex=right;
         }
+
+        right++;
+
+    }
+
+    for(int i=leftIndex;i<=rightIndex;++i){
+        answer+=s[i];
     }
 
     return answer;

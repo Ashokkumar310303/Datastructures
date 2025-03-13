@@ -7,20 +7,18 @@ string findLongestSubstring(string &s){
 
     string answer="";
 
-    vector<int> checking(26,0);
-
     int left=0,right=0;
     int maxLength=INT_MIN;
+
+    unordered_map<char,int> mpp;
 
     int leftIndex=-1,rightIndex=-1;
 
     while(right<s.length()){
 
-        checking[s[right]-'a']++;
-
-        while(checking[s[right]-'a']==2){
-            checking[s[left]-'a']--;
-            left++;
+        if(mpp.find(s[right])!=mpp.end() && mpp[s[right]]>=left){
+  
+            left=mpp[s[right]]+1;
         }
 
         if(right-left>maxLength){
@@ -29,7 +27,11 @@ string findLongestSubstring(string &s){
             rightIndex=right;
         }
 
+        mpp[s[right]]=right;
+
         right++;
+
+        cout<<left<<" "<<right<<endl;
 
     }
 

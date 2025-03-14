@@ -7,28 +7,27 @@ int findMaxConsecutiveOnes(vector<int> &arr,int &zeroFlip){
 
     int maxLength=INT_MIN;
 
+    int countZeros=0;
+
     int left=0,right=0;
 
     while(right<arr.size()){
 
+        if(arr[right]==0){
+            countZeros++;
+        }
 
-        while(zeroFlip==0 && arr[right]==0){
+        if(countZeros>zeroFlip){
             if(arr[left]==0){
-                zeroFlip++;
+                countZeros--;
             }
             left++;
         }
 
-        if(arr[right]==0){
-            zeroFlip--;
-        }
-
         maxLength=max(maxLength,right-left+1);
 
-
         right++;
-
-        cout<<left<<" "<<right<<endl;
+        
     }
 
     return maxLength;

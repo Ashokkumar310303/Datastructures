@@ -7,28 +7,30 @@ int findFruitBaskets(vector<int> &arr,int baskets){
 
     int maxFruits=0;
 
-    for(int i=0;i<arr.size();++i){
-        unordered_map<int,int> mpp;
-        for(int j=i;j<arr.size();++j){
-            
-            int fruit=arr[j];
+    int left=0,right=0;
 
-            if(mpp.find(fruit)!=mpp.end()){
-                mpp[fruit]+=1;
+    unordered_map<int,int> mpp;
+
+    while(right<arr.size()){
+
+        int fruit=arr[right];
+
+        mpp[fruit]++;
+
+        while(mpp.size()>baskets){
+            mpp[arr[left]]--;
+            if(mpp[arr[left]]==0){
+                mpp.erase(arr[left]);
             }
-            else if(mpp.size()<baskets){
-                mpp[fruit]=1;
-            }
-            else{
-                break;
-            }
-
-            maxFruits=max(maxFruits,j-i+1);
-
-
+            left++;
         }
 
+        maxFruits=max(maxFruits,right-left+1);
+
+        right++;
+        
     }
+    cout<<"hello"<<endl;
 
     return maxFruits;
 }

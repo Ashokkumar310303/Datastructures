@@ -6,40 +6,46 @@ using namespace std;
 
 string findLongestRepeating(vector<char> &arr,int repeatingAllowed){
 
-    int maxLength=-1;
-    int leftIndex=-1,rightIndex=-1;
+   string answer="";
 
-    for(int i=0;i<arr.size();++i){
-        vector<int> checking(26,0);
+   int left=0,right=0,maxCount=0;
+   int leftIndex=0,rightIndex=0;
 
-        for(int j=i;j<arr.size();++j){
+   int maxLength=0,length=0;
 
-            checking[arr[j]-'A']+=1;
-            
-            int maxCount=max(maxCount,checking[arr[j]-'A']);
+   vector<int> checking(26,0);
 
-            int length=j-i+1;
+   while(right<arr.size()){
 
-            if(length-maxCount>repeatingAllowed){
-                break;
+        checking[arr[right]-'A']++;
+        maxCount=max(maxCount,checking[arr[right]-'A']);
+        length=right-left+1;
+
+        while(length-maxCount>repeatingAllowed){
+            checking[arr[left]-'A']--;
+            maxCount=0;
+            for(auto it:checking){
+                maxCount=max(maxCount,it);
             }
-            else{
-                if(j-i+1>maxLength){
-                    maxLength=j-i+1;
-                    leftIndex=i;
-                    rightIndex=j;
-                }
-            }
+            length=right-left+1;
+            left++;
         }
-    }
+        
+        if(length>maxLength){
+            maxLength=length;
+            leftIndex=left;
+            rightIndex=right;
+        }
+        cout<<left<<" "<<right<<endl;
+        right++;
+   }
 
-    string answer="";
 
-    for(int i=leftIndex;i<=rightIndex;++i){
+   for(int i=leftIndex;i<=rightIndex;++i){
         answer+=arr[i];
-    }
+   }
 
-    return answer;
+   return answer;
 }
 
 int main(){

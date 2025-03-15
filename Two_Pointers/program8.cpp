@@ -15,11 +15,8 @@ string findLongestRepeating(vector<char> &arr,int repeatingAllowed){
         for(int j=i;j<arr.size();++j){
 
             checking[arr[j]-'A']+=1;
-            int maxCount=0;
-
-            for(auto it:checking){
-                maxCount=max(maxCount,it);
-            }
+            
+            int maxCount=max(maxCount,checking[arr[j]-'A']);
 
             int length=j-i+1;
 

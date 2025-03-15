@@ -5,34 +5,44 @@ using namespace std;
 
 string findLongestSubarray(vector<char> &arr,int distinctValue){
 
-    unordered_map<int,int> mpp;
-    int maxLength=-1,left=0,right=0;
-    string answer="";
+   string answer="";
 
+   unordered_map<int,int> mpp;
 
-    for(int i=0;i<arr.size();++i){
-        for(int j=i;j<arr.size();++j){
+   int left=0,right=0,maxLength=-1;
 
-            mpp[arr[j]]++;
+   int leftIndex=0,rightIndex=0;
 
-            if(mpp.size()<=distinctValue){
-                if(maxLength<j-i+1){
-                    maxLength=j-i+1;
-                    left=i;
-                    right=j;
-                }
+   while(right<arr.size()){
+
+        mpp[arr[right]]++;
+
+        while(mpp.size()>distinctValue){
+            mpp[arr[left]]--;
+            if(mpp[arr[left]]==0){
+                mpp.erase(arr[left]);
             }
-            else{
-                break;
-            }
+            left++;
         }
-    }
 
-    for(int i=left;i<=right;++i){
+        
+
+        if(maxLength<right-left+1){
+            maxLength=right-left+1;
+            leftIndex=left;
+            rightIndex=right;
+        }
+
+        right++;
+
+   }
+
+
+   for(int i=leftIndex;i<=rightIndex;++i){
         answer+=arr[i];
-    }
+   }
 
-    return answer;
+   return answer;
 }
 
 int main(){

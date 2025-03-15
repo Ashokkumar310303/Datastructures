@@ -17,7 +17,7 @@ string findLongestSubarray(vector<char> &arr,int distinctValue){
 
         mpp[arr[right]]++;
 
-        while(mpp.size()>distinctValue){
+        if(mpp.size()>distinctValue){
             mpp[arr[left]]--;
             if(mpp[arr[left]]==0){
                 mpp.erase(arr[left]);

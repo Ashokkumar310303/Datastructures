@@ -5,19 +5,42 @@ using namespace std;
 
 int findNoOfSubstrings(vector<char> &arr){
 
-    int countSubstrings=0;
-    
-    for(int i=0;i<arr.size();++i){
-        unordered_map<int,int> mpp;
-        for(int j=i;j<arr.size();++j){
-            mpp[arr[j]]++;
-            if(mpp.size()==3){
-                countSubstrings++;
+    int aLastPosition=-1,bLastPosition=-1,cLastPosition=-1;
+
+    int index=0;
+
+    int noOfSubstrings=0;
+
+    while(index<arr.size()){
+
+        if(arr[index]=='a'){
+            aLastPosition=index;
+        }
+        else if(arr[index]=='b'){
+            bLastPosition=index;
+        }
+        else{
+            cLastPosition=index;
+        }
+
+        if(aLastPosition!=-1 && bLastPosition!=-1 && cLastPosition!=-1){
+
+            if(aLastPosition<bLastPosition && aLastPosition<cLastPosition){
+                noOfSubstrings+=aLastPosition+1;
+            }
+            else if(bLastPosition<aLastPosition && bLastPosition<cLastPosition){
+                noOfSubstrings+=bLastPosition+1;
+            }
+            else{
+                noOfSubstrings+=cLastPosition+1;
             }
         }
+
+        index++;
     }
 
-    return countSubstrings;
+    return noOfSubstrings;
+    
 }
 
 int main(){

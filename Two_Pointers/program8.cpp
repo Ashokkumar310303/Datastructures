@@ -19,20 +19,19 @@ string findLongestRepeating(vector<char> &arr,int repeatingAllowed){
 
         checking[arr[right]-'A']++;
         maxCount=max(maxCount,checking[arr[right]-'A']);
-        length=right-left+1;
+        
 
-        while(length-maxCount>repeatingAllowed){
+        if((right-left+1)-maxCount>repeatingAllowed){
             checking[arr[left]-'A']--;
             maxCount=0;
             for(auto it:checking){
                 maxCount=max(maxCount,it);
             }
-            length=right-left+1;
             left++;
         }
         
-        if(length>maxLength){
-            maxLength=length;
+        if(right-left+1>maxLength){
+            maxLength=right-left+1;
             leftIndex=left;
             rightIndex=right;
         }

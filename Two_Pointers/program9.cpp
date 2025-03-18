@@ -5,24 +5,30 @@ using namespace std;
 
 int findNoOfSubarrays(vector<int> &arr,int goal){
 
-    int count=0;
-    
+    if(goal<0){
+        return 0;
+    }
 
-    for(int i=0;i<arr.size();++i){
-        int sum=0;
-        for(int j=i;j<arr.size();++j){
-            sum+=arr[j];
-            if(sum==goal){
-                count++;
-            }
-            else if(sum>goal){
-                break;
-            }
+    int count=0,sum=0;
+
+    int left=0,right=0;
+
+    while(right<arr.size()){
+
+        sum+=arr[right];
+
+        while(sum>goal){
+            sum-=arr[left];
+            left++;
         }
 
+        count+=(right-left+1);
+        right++;
     }
 
     return count;
+
+    
 }
 
 int main(){
@@ -53,8 +59,11 @@ int main(){
     cin>>goal;
 
     int count=findNoOfSubarrays(arr,goal);
+    int count2=findNoOfSubarrays(arr,goal-1);
 
-    cout<<"The no of subarrays are "<<count<<endl;
+    int finalCount=count-count2;
+
+    cout<<"The no of subarrays are "<<finalCount<<endl;
 
     return 0;
 }
